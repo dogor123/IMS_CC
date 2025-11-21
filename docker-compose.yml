@@ -1,52 +1,55 @@
+version: "3.9"
+
 services:
+  web:
+    image: tebancito/ims_cc:latest
+    container_name: ims_web
+    restart: always
+    ports:
+      - "8090:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: inventario_db
+      DB_USER: ims_user
+      DB_PASS: ims_pass
+    depends_on:
+      - db
+    networks:
+      - imsnet
+
   db:
     image: mysql:8.0
     container_name: ims_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: inventario_db
       MYSQL_USER: ims_user
       MYSQL_PASSWORD: ims_pass
     volumes:
       - db_data:/var/lib/mysql
-      - ./database.sql:/docker-entrypoint-initdb.d/database.sql:ro
-    ports:
-      - "3306:3306"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 5s
-      timeout: 5s
-      retries: 20
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
+    networks:
+      - imsnet
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: ims_phpmyadmin
     restart: always
-    environment:
-      PMA_HOST: db
-      PMA_USER: ims_user
-      PMA_PASSWORD: ims_pass
     ports:
       - "8091:80"
-    depends_on:
-      db:
-        condition: service_healthy
-  web:
-    build: .
-    container_name: ims_web
-    restart: always
-    ports:
-      - "8090:80"
-    depends_on:
-      db:
-        condition: service_healthy
     environment:
-      DB_HOST: db
-      DB_USER: ims_user
-      DB_PASS: ims_pass
-      DB_NAME: inventario_db
-    volumes:
-      - ./:/var/www/html
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: rootpass
+    depends_on:
+      - db
+    networks:
+      - imsnet
 
 volumes:
   db_data:
+
+networks:
+  imsnet:
+    driver: bridge

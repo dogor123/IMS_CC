@@ -1,18 +1,31 @@
-# Dockerfile – App PHP IMS
-FROM php:8.2-apache
+# ===========================
+# 1) BASE IMAGE PHP + APACHE
+# ===========================
+FROM php:8.2-apache AS production
 
-# Instalar extensiones necesarias
-RUN docker-php-ext-install mysqli pdo_mysql && docker-php-ext-enable mysqli
-
-# Activar mod_rewrite por si tu app lo necesita
+# Enable Apache rewrite module
 RUN a2enmod rewrite
 
-# Copiar el código de la app
+# Install required PHP extensions
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Remove default Apache files
+RUN rm -rf /var/www/html/*
+
+# Copy application code
 COPY . /var/www/html/
 
-# Permisos recomendados
+# Fix permissions
 RUN chown -R www-data:www-data /var/www/html
 
+# Expose Apache port
 EXPOSE 80
+
+# Metadata (Jenkins injects BUILD_VERSION)
+ARG BUILD_VERSION="dev"
+ENV APP_VERSION=$BUILD_VERSION
 
 CMD ["apache2-foreground"]

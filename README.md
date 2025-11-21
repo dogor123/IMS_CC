@@ -3,7 +3,7 @@ Sistema de gestión de inventario desarrollado en PHP, utilizando Apache y MySQL
 Este repositorio contiene exclusivamente **la aplicación web**, que forma parte de un ecosistema basado en contenedores Docker.
 El proyecto incluye integración CI/CD con Jenkins y despliegue automatizado a través de Docker Hub.
 
----
+
 ## 🚀 Características Principales
 - Interfaz web construida con PHP + HTML + JS
 - Autenticación de usuarios
@@ -14,7 +14,7 @@ El proyecto incluye integración CI/CD con Jenkins y despliegue automatizado a t
 - Imagen oficial en Docker Hub:  
   👉 `tebancito/ims_cc`
 
----
+
 ## 🏗 Arquitectura del Proyecto
 IMS_CC forma parte de un sistema completo compuesto por tres repositorios:
 | Repositorio | Descripción |
@@ -27,7 +27,8 @@ El objetivo es separar responsabilidades:
 - *IMS_CC* → Código web  
 - *IMS_CC_SQL* → Base de datos lista para usar  
 - *IMS_CC_DEPLOY* → Orquestación con docker-compose  
----
+
+
 ## 🐳 Imagen Docker
 La imagen de esta aplicación se genera automáticamente mediante un pipeline de Jenkins y se publica en:
 👉 **https://hub.docker.com/r/tebancito/ims_cc**

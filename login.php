@@ -122,9 +122,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="credentials-info">
                 <h3>👤 Credenciales de Prueba</h3>
                 <p><strong>Administrador:</strong></p>
-                <p>Usuario: <code>admin</code> | Contraseña: <code>admin123</code></p>
+                <p>Usuario: <code>admin</code> | Contraseña: <code>password</code></p>
                 <p style="margin-top: 10px;"><strong>Empleado:</strong></p>
-                <p>Usuario: <code>empleado</code> | Contraseña: <code>admin123</code></p>
+                <p>Usuario: <code>empleado</code> | Contraseña: <code>password</code></p>
             </div>
             
             <form method="POST" action="">

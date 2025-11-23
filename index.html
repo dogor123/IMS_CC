@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMS_CC – Gestión de Inventario</title>
+
+    <!-- Estilos base -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+        header {
+            padding: 20px;
+            background: #24292e;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 20px 40px;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+        h1, h2, h3 {
+            color: #111;
+        }
+        code {
+            background: #eee;
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+        pre {
+            background: #eee;
+            padding: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        table, th, td {
+            border: 1px solid #999;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>📦 IMS_CC – Aplicación Web de Gestión de Inventario</h1>
+</header>
+
+<div class="container">
+
+    <p>
+        Sistema de gestión de inventario desarrollado en PHP, utilizando Apache y MySQL como servicios base.
+        Este repositorio contiene exclusivamente <strong>la aplicación web</strong>, que forma parte de un ecosistema basado en contenedores Docker.
+    </p>
+
+    <hr>
+
+    <h2>🚀 Características Principales</h2>
+    <ul>
+        <li>Interfaz web construida con PHP + HTML + JS</li>
+        <li>Autenticación de usuarios</li>
+        <li>Gestión de productos e inventario</li>
+        <li>Registro de movimientos (entradas y salidas)</li>
+        <li>Arquitectura modernizada mediante Docker</li>
+        <li>Integración continua (CI) con Jenkins</li>
+        <li>Imagen oficial en Docker Hub: <code>tebancito/ims_cc</code></li>
+    </ul>
+
+    <hr>
+
+    <h2>🏗 Arquitectura del Proyecto</h2>
+
+    <p>IMS_CC forma parte de un sistema completo compuesto por tres repositorios:</p>
+
+    <table>
+        <tr><th>Repositorio</th><th>Descripción</th></tr>
+        <tr><td><b>IMS_CC</b></td><td>Aplicación web PHP (este repositorio)</td></tr>
+        <tr><td><b>IMS_CC_SQL</b></td><td>Imagen Docker MySQL con la base de datos preinstalada</td></tr>
+        <tr><td><b>IMS_CC_DEPLOY</b></td><td>Archivo docker-compose.yml para desplegar todo el sistema</td></tr>
+    </table>
+
+    <p>
+        El objetivo es separar responsabilidades:<br>
+        <b>IMS_CC</b> → Código web<br>
+        <b>IMS_CC_SQL</b> → Base de datos lista para usar<br>
+        <b>IMS_CC_DEPLOY</b> → Orquestación con docker-compose
+    </p>
+
+    <hr>
+
+    <h2>🐳 Imagen Docker</h2>
+
+    <p>La imagen de esta aplicación se genera automáticamente mediante Jenkins y se publica en:</p>
+
+    <p><a href="#">https://hub.docker.com/r/tebancito/ims_cc</a></p>
+
+    <h3>Ejecutar solo este contenedor (sin base de datos):</h3>
+
+    <pre>
+docker pull tebancito/ims_cc:latest
+docker run -p 8090:80 tebancito/ims_cc:latest
+    </pre>
+
+    <p><b>Nota:</b> Este modo funciona únicamente si la base de datos ya está disponible en otro contenedor o servidor.</p>
+
+    <hr>
+
+    <h2>🛠 Requisitos del Sistema</h2>
+    <ul>
+        <li>Docker o Docker Desktop</li>
+        <li>Navegador moderno</li>
+        <li>Contenedor MySQL o servicio equivalente</li>
+    </ul>
+
+    <hr>
+
+    <h2>📁 Estructura del Repositorio</h2>
+
+    <pre>
+IMS_CC/
+├── assets/          – Recursos estáticos
+├── config/          – Configuración
+├── controllers/     – Lógica del negocio
+├── ims/             – (Definir si deseas)
+├── models/          – Modelos de datos
+├── views/           – Plantillas
+├── docker-compose.yml
+├── Dockerfile
+├── index.php
+├── Jenkinsfile
+├── login.php
+├── logout.php
+└── README.md
+    </pre>
+
+    <hr>
+
+    <h2>⚙ Configuración de la Conexión a Base de Datos</h2>
+
+    <p>La aplicación usa estas variables de entorno:</p>
+
+    <pre>
+DB_HOST=db
+DB_USER=root
+DB_PASS=root
+DB_NAME=inventario_db
+    </pre>
+
+    <p>Variables definidas en el repositorio <b>IMS_CC_DEPLOY</b>:</p>
+
+    <p><a href="#">https://github.com/dogor123/IMS_CC_DEPLOY</a></p>
+
+    <hr>
+
+    <h2>🔄 Integración Continua (CI/CD)</h2>
+    <p>Este proyecto utiliza Jenkins para:</p>
+
+    <ul>
+        <li>Lint del Dockerfile</li>
+        <li>Escaneo de seguridad</li>
+        <li>Build automático</li>
+        <li>Pruebas</li>
+        <li>Versionado</li>
+        <li>Publicación en Docker Hub</li>
+    </ul>
+
+    <pre>
+main branch → Build + Test + Push
+Etiquetas:
+- latest
+- 1.0.&lt;BUILD_NUMBER&gt;
+- prod-YYYYMMDD
+    </pre>
+
+    <hr>
+
+    <h2>🚀 Despliegue Completo del Sistema</h2>
+
+    <p>Despliegue con docker-compose:</p>
+
+    <pre>
+git clone https://github.com/dogor123/IMS_CC_DEPLOY
+cd IMS_CC_DEPLOY
+docker compose pull
+docker compose up -d
+    </pre>
+
+    <hr>
+
+    <h2>🧩 Cómo Contribuir</h2>
+
+    <ul>
+        <li>Fork al repositorio</li>
+        <li>Nueva rama para cambios</li>
+        <li>Commits limpios</li>
+        <li>Pull Request</li>
+    </ul>
+
+    <hr>
+
+    <h2>🐛 Reporte de Problemas</h2>
+    <p>Si encuentras errores, abre un Issue y adjunta logs si es necesario.</p>
+
+    <hr>
+
+    <h2>👨‍💻 Autor</h2>
+    <p>Esteban Diaz Vargas<br>Ingeniería de Informática<br>Proyecto académico – Cloud Computing.</p>
+
+    <hr>
+
+    <h2>📄 Licencia</h2>
+    <p>Libre uso académico.</p>
+
+</div>
+
+</body>
+</html>
